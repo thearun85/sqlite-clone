@@ -66,6 +66,20 @@ PrepareResult prepare_statement(InputBuffer* input_buffer,
 	return PREPARE_UNRECOGNIZED_STATEMENT;
 }
 
+void execute_statement(Statement* statement) {
+	switch (statement->type) {
+		case STATEMENT_INSERT:
+			printf("It is insert\n");
+			break;
+		case STATEMENT_SELECT:
+			printf("It is select\n");
+			break;
+		case STATEMENT_DELETE:
+			printf("It is delete\n");
+			break;
+	}
+}
+
 void read_input(InputBuffer* input_buffer) {
 	ssize_t bytes_read = getline(&(input_buffer->buffer), &(input_buffer->buffer_length), stdin);
 	if (bytes_read <=0) {
@@ -105,7 +119,8 @@ int main(int argc, char *argv[])
 				printf("[sqlite-db] Unrecognized command '%s'.\n", input_buffer->buffer);
 				continue;
 		}
-			
-		
+
+		execute_statement(&statement);
+		printf("Execution completed\n");
 	}
 }
